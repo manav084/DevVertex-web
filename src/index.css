@@ -1,0 +1,2 @@
+@import "tailwindcss";  /* ✅ v4 — NOT @tailwind base/components/utilities */
+@plugin "daisyui";
