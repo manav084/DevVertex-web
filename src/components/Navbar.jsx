@@ -1,6 +1,7 @@
 import React from 'react'
 import { useSelector } from 'react-redux'
 import userProfile from '../assets/userProfile.png'
+import { Link } from 'react-router'
 
 const Navbar = () => {
   const user = useSelector((store)=> store.user)
@@ -9,7 +10,7 @@ const Navbar = () => {
   return (
       <div className="navbar bg-base-300 shadow-sm">
   <div className="flex-1">
-    <a className="btn btn-ghost text-xl">DevVertex</a>
+    <Link to='/' className="btn btn-ghost text-xl">DevVertex</Link>
   </div>
   <div className="flex gap-2">
   {user && (
@@ -29,9 +30,9 @@ const Navbar = () => {
       <ul
         tabIndex="-1"
         className="menu menu-sm dropdown-content bg-base-100 rounded-box z-1 mt-3 w-52 p-2 shadow">
-        <li><a className="justify-between">Profile<span className="badge">New</span></a></li>
-        <li><a>Settings</a></li>
-        <li><a>Logout</a></li>
+        <li><Link to='/profile' className="justify-between">Profile<span className="badge">New</span></Link></li>
+        <li><Link>Settings</Link></li>
+        <li><Link to='/logout'>Logout</Link></li>
       </ul>
 
     </div>
