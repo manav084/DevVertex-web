@@ -42,7 +42,14 @@ const logoutUrl = BASE_URL+"/logout"
       <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
         <div className="w-10 rounded-full">
           
-          <img alt="User Photo" src={user.photoUrl || userProfile} />
+          {/* <img alt="User Photo" src={user.photoUrl || userProfile} /> */}
+
+          <img
+  src={user.photoUrl || userProfile}
+  onError={(e) => {
+    e.target.src = userProfile;
+  }}
+/>
         </div>
       </div>
 
