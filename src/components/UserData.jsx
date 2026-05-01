@@ -2,7 +2,7 @@ import React from 'react'
 import userProfile from '../assets/userProfile.png'
 
 const UserData = ({ user }) => {
-  const { firstName, lastName, photoUrl, skills, about, role, experience } = user
+  const { firstName, lastName, photoUrl, skills, about,gender,age, role, experience } = user
 
   return (
     <div className="w-88 rounded-2xl overflow-hidden border border-base-300 bg-base-100 shadow-md">

@@ -13,6 +13,7 @@ const Login = () => {
     const dispatch = useDispatch()
     const handleLogin = async() =>{
 
+        setErrors("")
         try {
 
              const loginUrl = BASE_URL+"/login"
