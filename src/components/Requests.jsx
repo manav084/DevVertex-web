@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { BASE_URL } from '../utils/constants'
 import axios from 'axios'
 import { useDispatch, useSelector } from 'react-redux'
-import { addRequests } from '../utils/requestSlice'
+import { addRequests, removeRequests } from '../utils/requestSlice'
 import userProfile from '../assets/userProfile.png'
 
 const Requests = () => {
@@ -12,13 +12,27 @@ const Requests = () => {
   const dispatch = useDispatch()
      const requests = useSelector(state=> state.requests)
 
-  const requestUrl = BASE_URL + "/user/requests/received"
+  const fetchRequestUrl = BASE_URL + "/user/requests/received"
+  
+  
+  const reviewRequest = async (status,_id) =>{
+      try {
+        const reviewRequestUrl = BASE_URL + "/request/review/" + status + "/" + _id
+
+        const res = await axios.post(reviewRequestUrl,{},{withCredentials:true})
+        dispatch(removeRequests(_id))
+          console.error(error)
+    } catch (error) {
+        console.error(error)
+    }
+
+  }
 
     const fetchRequests = async () =>{
 
         try {
 
-              const res = await axios.get(requestUrl, {withCredentials:true})
+              const res = await axios.get(fetchRequestUrl, {withCredentials:true})
               dispatch(addRequests(res.data.data))
             
         } catch (error) {
@@ -32,7 +46,7 @@ const Requests = () => {
      fetchRequests()
     }, [])
     
-if(!requests) return
+// if(!requests) return
 
     // if(requests.length === 0) return <h1 className='text-center'>No Requests Found</h1>
 
@@ -94,8 +108,8 @@ if(requests.length === 0) return (
                             )} */}
                         </div>
                         <div className='flex gap-2'>
-        <button className='btn btn-sm btn-outline'>Reject</button>
-        <button className='btn btn-sm btn-primary'>Accept</button>
+        <button onClick={()=>reviewRequest('rejected',request._id)} className='btn btn-sm btn-outline'>Reject</button>
+        <button onClick={()=>reviewRequest('accepted',request._id)} className='btn btn-sm btn-primary'>Accept</button>
     </div>
 
                     </div>

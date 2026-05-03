@@ -89,8 +89,8 @@ const Connections = () => {
                             )} */}
                         </div>
                         <div className='flex gap-2'>
-        <button className='btn btn-sm btn-outline'>Reject</button>
-        <button className='btn btn-sm btn-primary'>Accept</button>
+        <button className='btn btn-sm btn-outline'>Ignore</button>
+        <button className='btn btn-sm btn-primary'>Interested</button>
     </div>
 
                     </div>
