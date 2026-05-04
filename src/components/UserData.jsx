@@ -1,8 +1,29 @@
 import React from 'react'
 import userProfile from '../assets/userProfile.png'
+import axios from 'axios'
+import { BASE_URL } from '../utils/constants'
+import { useDispatch, useSelector } from 'react-redux'
+// import { addUser } from '../utils/userSlice'
+import {  removeUserFromFeed } from '../utils/feedSlice'
+
 
 const UserData = ({ user }) => {
   const { firstName, lastName, photoUrl, skills, about,gender,age, role, experience } = user
+    const loggedInUser = useSelector(store=> store.user)
+    const dispatch = useDispatch()
+  const handleSendRequest = async(status,_id) =>{
+    console.log("clicked", status, _id)
+   try {
+      const connectionRequestUrl = BASE_URL + "/request/send/"+ status +"/" + _id
+     const res = await axios.post(connectionRequestUrl,{},{withCredentials:true})
+        dispatch(removeUserFromFeed(_id))
+    
+   } catch (error) {
+
+    console.error(error)
+    
+   }
+  }
 
   return (
     <div className="w-88 rounded-2xl overflow-hidden border border-base-300 bg-base-100 shadow-md">
@@ -18,7 +39,7 @@ const UserData = ({ user }) => {
           className="w-full h-full object-cover"
         />
         {/* Name + Role overlay */}
-        <div className="absolute bottom-0 left-0 right-0 px-4 py-1"
+        <div className="absolute bottom-0 left-0 right-0 px-4 py-1 pointer-events-none"
           style={{ background: "linear-gradient(transparent, rgba(0,0,0,0.7))" }}>
            <h2 className="text-xl font-semibold text-white drop-shadow">
             {firstName} {lastName}
@@ -30,7 +51,7 @@ const UserData = ({ user }) => {
       </div>
 
       
-  {/* <img alt="User Photo" src={user.photoUrl || userProfile} />}
+  {/* <img alt="User Photo" src={user.photoUrl || userProfile} /> */}
       {/* Details */}
       <div className="p-5 flex flex-col gap-3">
 
@@ -55,8 +76,8 @@ const UserData = ({ user }) => {
 
         {/* Buttons */}
         <div className="flex gap-3 mt-1">
-          <button className="btn btn-outline flex-1">Ignore</button>
-          <button className="btn btn-primary flex-1">Interested</button>
+          <button onClick={()=> handleSendRequest('ignored',user._id)} className="btn btn-outline flex-1">Ignore</button>
+          <button onClick={()=> handleSendRequest('interested',user._id)} className="btn btn-primary flex-1">Interested</button>
         </div>
 
       </div>

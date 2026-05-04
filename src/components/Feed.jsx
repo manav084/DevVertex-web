@@ -6,16 +6,16 @@ import { addFeed } from '../utils/feedSlice'
 import UserData from './UserData'
 
 const Feed = () => {
-  const dipsatch = useDispatch()
+  const dispatch = useDispatch()
   const feed = useSelector(store=> store.feed)
   const feedUrl = BASE_URL+"/feed"
   const getFeed =async()=>{
 
-    if(feed) return
+    if(feed && feed.length>0) return
     try {
           const res = await axios.get(feedUrl,{withCredentials: true})
 
-      dipsatch(addFeed(res?.data?.data))
+      dispatch(addFeed(res?.data?.data))
     } catch (error) {
       console.error(error)
     }
@@ -25,13 +25,19 @@ const Feed = () => {
 
   useEffect(()=>{
     getFeed()
-  })
+  },[])
 
   return (
-    feed &&(
+   
 
-      <div className='flex justify-center m-5'><UserData user ={feed[0]} /></div>
-    )
+      <div className='flex justify-center m-5'> {
+         feed && feed.length>0 ?<UserData user ={feed[0]}
+         />  : <h1 className='text-center text-2xl'>No More Users!</h1>
+      }
+        
+        
+        </div>
+    
   )
 }
 
