@@ -57,7 +57,7 @@ const Login = () => {
         
     }
     return (
-        <div className='flex justify-center my-16'>
+        <div className='flex justify-center items-start py-8'>
             <div className="card bg-base-200 w-96 shadow-md">
                 <div className="card-body gap-4">
                     <h2 className="card-title justify-center text-2xl mb-2"> {isLogin ? 'Welcome back' : 'Welcome to Dev Vertex'}</h2>
