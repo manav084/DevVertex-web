@@ -11,7 +11,7 @@ const EditProfile = ({ user }) => {
     const [age, setAge] = useState(user.age)
     const [about, setAbout] = useState(user.about)
     const [photoUrl, setPhotoUrl] = useState(user.photoUrl)
-    const [skills, setSkills] = useState(user.skills)
+    const [skills, setSkills] = useState(user.skills?.join(",") || (""))
     const [experience, setExperience] = useState(user.experience)
     const [role, setRole] = useState(user.role)
     const [gender, setGender] = useState(user.gender)
@@ -22,12 +22,21 @@ const EditProfile = ({ user }) => {
 
     const dispatch = useDispatch()
 
+   
+const getFormattedSkills = () => {
+    return skills.split(",").map(s => s.trim()).filter(Boolean)
+
+}
+const formattedSkills = getFormattedSkills()
+
     const saveProfile = async () => {
         setErrors("")
         try {
             const editUrl = BASE_URL + "/profile/edit"
 
-            const res = await axios.patch(editUrl, { firstName, lastName, age, about, photoUrl, skills, experience, role, gender }, { withCredentials: true })
+          
+
+            const res = await axios.patch(editUrl, { firstName, lastName, age, about, photoUrl, skills:formattedSkills, experience, role, gender }, { withCredentials: true })
             dispatch(addUser(res?.data?.data))
             setShowToast(true)
 
@@ -173,7 +182,7 @@ const EditProfile = ({ user }) => {
                 <div className='sticky top-10'>
                     <p className='text-center text-sm text-base-content/50 mb-3'>Live Preview</p>
 
-                    <UserData user={{ firstName, lastName, photoUrl, skills, about, role, experience }} />
+                    <UserData user={{ firstName, lastName, photoUrl, skills:formattedSkills, about, role, experience }} />
                 </div>
             </div>
             {showToast && (
