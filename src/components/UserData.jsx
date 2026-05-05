@@ -1,24 +1,43 @@
-import React from 'react'
+import React, { useState } from 'react'
 import userProfile from '../assets/userProfile.png'
 import axios from 'axios'
 import { BASE_URL } from '../utils/constants'
 import { useDispatch, useSelector } from 'react-redux'
 // import { addUser } from '../utils/userSlice'
 import {  removeUserFromFeed } from '../utils/feedSlice'
+import { useNavigate } from 'react-router'
+import AuthModal from './AuthModal'
+
 
 
 const UserData = ({ user }) => {
+  
+  const [showModel ,setShowModel] = useState(false)
+
   const { firstName, lastName, photoUrl, skills, about,gender,age, role, experience } = user
     const loggedInUser = useSelector(store=> store.user)
+
+
     const dispatch = useDispatch()
+ const navigate = useNavigate()
+
   const handleSendRequest = async(status,_id) =>{
-    console.log("clicked", status, _id)
+    // console.log("clicked", status, _id)
+   
+      if(!loggedInUser){
+        setShowModel(true)
+        return
+      }
+    
    try {
       const connectionRequestUrl = BASE_URL + "/request/send/"+ status +"/" + _id
      const res = await axios.post(connectionRequestUrl,{},{withCredentials:true})
         dispatch(removeUserFromFeed(_id))
     
    } catch (error) {
+    if(error?.response?.status === 401){
+      navigate('/login')
+    }
 
     console.error(error)
     
@@ -81,6 +100,7 @@ const UserData = ({ user }) => {
         </div>
 
       </div>
+      {showModel && <AuthModal onClose={() => setShowModel(false)} />}
     </div>
   )
 }

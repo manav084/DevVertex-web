@@ -8,10 +8,12 @@ import UserData from './UserData'
 const Feed = () => {
   const dispatch = useDispatch()
   const feed = useSelector(store=> store.feed)
-  const feedUrl = BASE_URL+"/feed"
+  const isLoggedIn = useSelector(store => store.user)
+
+  const feedUrl =  isLoggedIn? BASE_URL+"/feed" : BASE_URL + '/feed/public'
   const getFeed =async()=>{
 
-    if(feed && feed.length>0) return
+    if(feed && feed.length>0 && isLoggedIn) return
     try {
           const res = await axios.get(feedUrl,{withCredentials: true})
 
@@ -25,7 +27,7 @@ const Feed = () => {
 
   useEffect(()=>{
     getFeed()
-  },[])
+  },[isLoggedIn])
 
   return (
    

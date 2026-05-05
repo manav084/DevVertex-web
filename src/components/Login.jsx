@@ -13,7 +13,7 @@ const Login = () => {
     const [emailId, setEmailId] = useState("")
     const [password, setPassword] = useState("")
 
-    const [isLogin, setIsLogin] = useState(false)
+    const [isLogin, setIsLogin] = useState(true)
     const [errors, setErrors] = useState("")
     const dispatch = useDispatch()
 
@@ -60,7 +60,7 @@ const Login = () => {
         <div className='flex justify-center items-start py-8'>
             <div className="card bg-base-200 w-96 shadow-md">
                 <div className="card-body gap-4">
-                    <h2 className="card-title justify-center text-2xl mb-2"> {isLogin ? 'Welcome back' : 'Welcome to Dev Vertex'}</h2>
+                    <h2 className="card-title justify-center text-2xl mb-2"> {isLogin ? 'Welcome back' : 'Welcome to DevVertex'}</h2>
                     {!isLogin && (
                         <>
                             <label className="form-control w-full">

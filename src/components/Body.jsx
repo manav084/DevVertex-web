@@ -25,9 +25,9 @@ const Body = () => {
 
     } catch (error) {
 
-      if (error.status === 401) {
-        navigate("/login")
-      }
+      // if (error.status === 401) {
+      //   navigate("/login")
+      // }
       console.error(error)
     }
   }
